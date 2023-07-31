@@ -1,0 +1,10 @@
+%pip install requests
+%pip install pprint
+%pip install newsapi-python
+sk = 'input your api key string'
+
+import requests
+import pprint
+url = 'https://newsapi.org/v2/everything?q=지진&from=2023-07-25&to=2023-07-30&sortBy=popularity&apiKey='
+response  = requests.get(url+sk)
+pprint.pprint(response.text)
