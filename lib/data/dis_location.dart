@@ -1687,8 +1687,8 @@ class DisLocation {
       var lat = double.parse(shelter[i]['latitude'].toString());
       var long = double.parse(shelter[i]['longitude'].toString());
 
-      final double km = distance.as(LengthUnit.Kilometer,
-          LatLng(latitude, longtitude), LatLng(lat, long));
+      double km = distance.as(LengthUnit.Kilometer,
+          LatLng(37.595375302, 127.063042916), LatLng(lat, long));
       if (minKm > km) {
         minKm = km;
         minIndex = i;
