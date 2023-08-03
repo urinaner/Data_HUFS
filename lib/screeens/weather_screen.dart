@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:timer_builder/timer_builder.dart';
 import '../model/model.dart';
+import '../screeens/map_screen.dart';
+import '../screeens/news_screen.dart';
 
 class WeatherScreen extends StatefulWidget {
   const WeatherScreen(
@@ -10,12 +12,14 @@ class WeatherScreen extends StatefulWidget {
       this.parseAirData,
       this.parseDisaster,
       this.parseMinLocation,
-      this.parseMinLocationName});
+      this.parseMinLocationName,
+      this.parseShelterLocation});
   final parseWeatherData;
   final parseAirData;
   final parseDisaster;
   final parseMinLocation;
   final parseMinLocationName;
+  final parseShelterLocation;
 
   @override
   State<WeatherScreen> createState() => _WeatherScreenState();
@@ -35,6 +39,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
   double dust2 = 0;
   double? minkm;
   String? minname;
+  var shelterList;
   var date = DateTime.now();
   @override
   void initState() {
@@ -45,11 +50,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
         widget.parseAirData,
         widget.parseDisaster,
         widget.parseMinLocation,
-        widget.parseMinLocationName);
+        widget.parseMinLocationName,
+        widget.parseShelterLocation);
   }
 
   void updateData(dynamic weatherData, dynamic airData, dynamic disData,
-      dynamic minKm, dynamic minName) {
+      dynamic minKm, dynamic minName, dynamic shelter) {
     double temp2 = weatherData['main']['temp'];
     temp = temp2.round();
     des = weatherData['weather'][0]['description'];
@@ -61,6 +67,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
     dismsg = disData['DisasterMsg'][1]['row'][0]['msg'];
     minname = minName;
     minkm = minKm;
+    shelterList = shelter;
     print(minKm);
     print(minName);
     print('ㅎㅇㅎㅇ');
@@ -87,14 +94,20 @@ class _WeatherScreenState extends State<WeatherScreen> {
         title: const Text('SALGIL'),
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: const Icon(Icons.near_me),
-          onPressed: () {},
+          icon: const Icon(Icons.alarm),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const NewsScreen()));
+          },
           iconSize: 30,
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const MapScreen()));
+            },
             iconSize: 30,
           ),
         ],
@@ -236,12 +249,12 @@ class _WeatherScreenState extends State<WeatherScreen> {
                           ),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 5,
                         ),
                         Text(
                           '비상시 신속히 응급용품을 가지고 대피할 수 있도록 사전에 배낭 등에 모아둡니다.∙ 상수도 공급이 중단 될 수 있으므로, 욕조 등에 미리 물을 받아둡니다.∙ 재난정보 수신을 위해 스마트폰에 안전디딤돌 앱이 설치되었는지 확인하고 가까운 행정복지센터(주민센터) 등과 긴급 연락망을 확인합니다.',
                           style: GoogleFonts.lato(
-                            fontSize: 18,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),

@@ -37,6 +37,8 @@ class _LoadingState extends State<Loading> {
     await disLocation.getMinLocation();
     var minKm = disLocation.minKm;
     var minName = await disLocation.getMinLocation();
+    var shelter = disLocation.shelter;
+    print(shelter[2]);
     print(minName);
 
     Network network = Network(
@@ -62,7 +64,8 @@ class _LoadingState extends State<Loading> {
               parseAirData: airData,
               parseDisaster: disData,
               parseMinLocation: minKm,
-              parseMinLocationName: minName);
+              parseMinLocationName: minName,
+              parseShelterLocation: shelter);
         },
       ),
     );
